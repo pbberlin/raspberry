@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raspberry main</title>
+
+    <link rel="stylesheet" type="text/css" href="templates/style.css">
+</head>
+
+<body style='font-size:20px; background-color:#{color}'>
+
+
+    <div style='float:left;'>
+        <a href='/'  accesskey="h"     >Home</a> &#8226; 
+        <!-- <a href='/sleep'>Sleep</a><br> -->
+        <a href='/htop/'               >Htop</a> &#8226; 
+        <a href='/log/'                >Log </a> &#8226;
+        <a href='/webserver-restart/'  >WS Restart</a> &#8226;
+        <!-- <a href='/webserver-stop/'     >Stop</a> &#8226; -->
+        <a href='/shutdown/'           >Raspi Reboot</a> 
+        <a href='/ifconfig/'           >ifconfig</a> 
+        <br>
+        <br>
+        <a href='/servo/'>Servo motors</a>
+        <br>
+        <br>
+        <a href='/relais-on-off/?state=on'  >DC motor relais start</a> &#8226;
+        <a href='/relais-on-off/?state=off' >Stop</a> &#8226;
+        <!-- <a href='/relais-proc/'>Brush relais start in separate process</a><br> -->
+        <a href='/brush/'>DC motors go</a> 
+        <!-- <a  href='/drag.html'>Drag</a>          &nbsp; &nbsp;  -->
+        <!-- <a href='/brush-proc/'>Brush motors separate process</a> -->
+        <br>
+        <br>
+        <a href='/video-window/'>Video window</a> &#8226;
+        <a style="font-size: 60%;" href='/video/'>Standalone video</a>
+        <br>
+        <br>
+        <a href='#' onclick="vidstageToggle();return false;">Standalone video</a><br>
+        <!-- really empty -->
+        <div style='aafloat:left; width: 60%; height: 240px; border: 1px solid #2222bb;' id='vidstage'></div>
+
+        {content1}
+        {content2}
+
+
+    </div>
+    
+
+
+
+    <div style='float:left;'>
+
+
+        <script src="templates/drag.js"></script>
+    
+        <!-- viewBox and width/height have to be same proportion 
+            we omit height, for auto scaling
+        -->
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 68 112"
+            onload="activateDrag(evt,'32168','graphArea','planX','http://192.168.179.197/brush-ajax/',12)" 
+            width="300"
+            omitted-height="800" 
+            style="border: 1px solid #000; padding: 0; margin: 0; background-color:#7fffd4;"
+        >
+        
+            <!-- grey placeholder - constrainer  -->
+            <rect id="graphArea" fill="#bbb" x="10" y="10" width="48" height="92" />
+        
+            <!-- null area  15 percent of 24 and 46 plus 4 margin of cross  -->
+            <ellipse id="ctrl1" fill="#444444" cx="34" cy="56" rx="7.6" ry="10.9" transform="translate(0, 0)" />
+        
+        
+            <!-- 6 wide, 8 len -->
+            <polygon id="ctrl1" class="draggable" fill="#11a500"
+                points="20 60    28 60    28 68    34 68    34 60    42 60    42 54    34 54    34 46    28 46   28 54   20 54   "
+                transform="translate(3, -1)" />
+        
+
+
+        </svg>
+    
+        <div id='console-log' style='white-space:pre-wrap;line-height: 110%; 
+        font-size: 12px;
+        margin: 4px; background-color:#eee;
+        height: 160px;
+        overflow-y: auto;
+        '></div>
+
+    </div>
+
+
+
+</body>
+
+</html>

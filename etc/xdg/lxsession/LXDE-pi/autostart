@@ -1,0 +1,4 @@
+@lxpanel --profile LXDE-pi
+@pcmanfm --desktop --profile LXDE-pi
+@/usr/bin/chromium-browser --noerordialogs --disable-session-crashed-bubble --disable-infobars --kiosk http://localhost
+@xscreensaver -no-splash

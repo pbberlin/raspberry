@@ -1,0 +1,33 @@
+[Unit]
+Description=WebServer
+After=network-online.target
+
+[Service]
+Type=simple
+Environment="One=1" "Three=3" "RUNNINGASSERVICE=true"
+ExecStart=sudo /usr/bin/python3 -u /home/pi/webserver/webserver.py
+ExecStop=/bin/true
+# have python finally executed: raspberrypi.stackexchange.com/questions/77738/
+# otherwise use type notify with github.com/systemd/python-systemd
+KillSignal=SIGINT
+WorkingDirectory=/home/pi/webserver
+Restart=always
+User=pi
+# bind to a port below 1024
+# CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+# AmbientCapabilities=CAP_NET_BIND_SERVICE
+# to execute *htop* via subprocess.run, we need a console
+TTYPath=/dev/tty6
+StandardInput=tty
+StandardOutput=tty
+# consequentiall - all stuff below does not work
+# StandardOutput=inherit
+# StandardError=inherit
+# StandardOutput=/var/log/webserver.log
+# StandardError=/var/log/webserver.log
+# SyslogIdentifier=websrvapp
+# StandardOutput=syslog
+# StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target

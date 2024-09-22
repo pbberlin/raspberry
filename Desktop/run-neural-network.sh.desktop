@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Exec=bash /home/pi/Documents/tflite1/exec.sh
+Path=/home/pi/Documents/tflite1
+Name=Neural-Network
+GenericName=Neural-Network-gen
+#Comment=Blah-comment
+Encoding=UTF-8
+Terminal=true
+#Icon=gvim
+Type=Application
+Categories=Application;Network
+X-KeepTerminal=true
+StartupNotify=true

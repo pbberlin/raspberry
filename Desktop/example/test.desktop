@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Exec=python3 /home/pi/Desktop/example/test.py
+Path=/home/pi/Desktop/example
+Name=test
+GenericName=test-gen
+Encoding=UTF-8
+Terminal=true
+Type=Application
+Categories=Application;Network
+X-KeepTerminal=true
+#StartupNotify=true

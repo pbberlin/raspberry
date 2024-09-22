@@ -1,0 +1,28 @@
+tmp/*
+tmp*
+bin
+*.exe
+*.swp
+*.msi
+*.pyc
+*.docx
+*.zip
+*.log
+out[0-9]-*.*
+difi-spread-analysis/*.pdf
+participants-round?.md
+work0?.py
+*/.vscode/*
+*/__pycache__/*
+/*/*/__pycache__/*
+python-course/combine-inputs/*.txt
+python-course/combine-inputs/*.csv
+python-course/__pycache__/*
+python-course/2017-*
+# cyberghost credentials
+/openvpnconfig/pass.txt
+pass.txt
+# full dataset
+difi-spread-analysis/inp-difi-2017-10-no-sonderfragen-full.csv
+# go countdown
+go-countdown/inp/*

@@ -1,0 +1,20 @@
+[Unit]
+Description=GPIO-init
+After=basic.target
+#After=sysinit.target
+
+
+[Service] 
+ExecStart=sudo /usr/bin/python3 -u /home/pi/Documents/gpio-init.py
+WorkingDirectory=/home/pi/Documents
+StandardOutput=inherit
+StandardError=inherit
+# Restart=always
+User=pi
+
+
+[Install]
+WantedBy=basic.target
+#WantedBy=sysinit.target
+
+

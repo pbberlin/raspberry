@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Drag demo</title>
+  <link rel="stylesheet" type="text/css" href="/templates/style.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<a href='/' accesskey="h">Home</a><br>
+
+<script src="drag.js"></script>
+
+<!-- viewBox and width/height have to be same proportion 
+  	we omit height, for auto scaling
+-->
+<svg 
+    xmlns="http://www.w3.org/2000/svg"
+    version="1.1"
+    viewBox="0 0 68 112"
+    onload="activateDrag(evt,'32168','graphArea','planX','http://192.168.179.197/brush-ajax/',12)"
+    width= "500"
+    omitted-height="800"
+    style="border: 1px solid #000; padding: 0; margin: 0; background-color:#7fffd4;"
+>
+
+    <!-- grey placeholder - constrainer  -->
+    <rect    id="graphArea"                    fill="#bbb"      x="10"  y="10" width="48" height="92" />
+
+    <!-- null area  15 percent of 24 and 46 plus 4 margin of cross  -->
+    <ellipse id="ctrl1"  fill="#444444" cx="34" cy="56" rx="7.6" ry="10.9" transform="translate(0, 0)" />
+
+
+    <!-- 6 wide, 8 len -->
+    <polygon id="ctrl1"  class="draggable"     fill="#11a500"   
+            points="20 60    28 60    28 68    34 68    34 60    42 60    42 54    34 54    34 46    28 46   28 54   20 54   "  
+            transform="translate(3, -1)"
+    />
+
+</svg>
+
+<div id='console-log' style='white-space:pre-wrap;line-height: 110%; 
+  font-size: 12px;
+  margin: 4px; background-color:#eee;
+  height: 160px;
+  overflow-y: auto;
+  '></div>
+
+</body>
+
+</html>
