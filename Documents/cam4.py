@@ -28,7 +28,7 @@ to check for cam and index
 
 conf = {
 	"use_dropbox": True,
-	"dropbox_access_token": "9YyWdwaEihAAAAAAAAAAED6LVes-nOVrPdza0Rk0pLkqEWu2J9sPJykgHEkOZ7q0",
+	"dropbox_access_token": "[secret]",
 	"dropbox_base_path": "raspberry",
 
 	"show_video": True,
