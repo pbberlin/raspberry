@@ -1296,3 +1296,40 @@ screen -r ngrok
 ```
 
 [access from everywhere](https://merry-mosquito-cool.ngrok-free.app/)
+
+
+## ngrok and filebrowser as systemd service
+
+instead of screen
+
+```bash
+
+# sudo systemctl edit --force --full your-service-name.service
+  
+  sudo systemctl edit --force --full filebrowser.service
+
+
+[Unit]
+Description=file browser
+After=network.target
+
+[Service]
+User=pbu
+ExecStart=/usr/local/bin/filebrowser
+WorkingDirectory=/home/pbu/filebrowser
+
+Restart=on-failure
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+
+
+sudo systemctl daemon-reload
+sudo systemctl stop    filebrowser.service
+sudo systemctl start   filebrowser.service
+sudo systemctl status  filebrowser.service
+sudo systemctl enable  filebrowser.service
+
+```
