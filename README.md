@@ -1286,8 +1286,8 @@ ngrok config add-authtoken 76pggRKnEJWhQQdJnMRHP_2NuUArqX1QTGsmSvtW4Tc
 screen -S ngrok
 # ngrok http --domain=merry-mosquito-cool.ngrok-free.app 80
 ngrok http --domain=merry-mosquito-cool.ngrok-free.app   80
-ngrok http --domain=merry-mosquito-cool.ngrok-free.app 8081
 ngrok http --domain=merry-mosquito-cool.ngrok-free.app 2342
+ngrok http --domain=merry-mosquito-cool.ngrok-free.app 8081
 # [CTRL-A][D]
 
 screen -ls
@@ -1333,3 +1333,39 @@ sudo systemctl status  filebrowser.service
 sudo systemctl enable  filebrowser.service
 
 ```
+
+
+#### ngrok service
+
+```bash
+
+  sudo systemctl edit --force --full ngrok.service
+
+
+[Unit]
+Description=ngrok remote access
+After=network.target
+
+[Service]
+User=pbu
+ExecStart=/usr/local/bin/ngrok  http --domain=merry-mosquito-cool.ngrok-free.app 8081
+WorkingDirectory=/home/pbu/ngrok
+
+Restart=on-failure
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+
+
+sudo systemctl daemon-reload
+sudo systemctl stop    ngrok.service
+sudo systemctl start   ngrok.service
+sudo systemctl status  ngrok.service
+sudo systemctl enable  ngrok.service
+
+```
+
+
+
