@@ -1,6 +1,7 @@
 import os
 import json
 import time
+from datetime import datetime
 from pathlib import Path
 import traceback
 
@@ -9,8 +10,8 @@ import piexif
 
 
 # Directory containing the JSON files
-srcDirJson = './2024'
-dstDir = '../Photos/2024'
+srcDirJson = './2023'
+dstDir = '../Photos/2023'
 
 
 def jpgDescSet(imgPth, desc, imgPthOut=None):
@@ -87,12 +88,33 @@ def globJsons(srcDir, dstDirRel):
                 # print(f"\tdesc:  {desc}")
                 # print(f"\t{fnJson}")
 
+            # this is the right one for sorting
+            ts1 = dta.get('photoTakenTime', {}).get('timestamp')
 
-            ts = dta.get('photoTakenTime', {}).get('timestamp')
+            # this is not useful
+            ts2 = dta.get('creationTime',   {}).get('timestamp')
+
+            # formatted is only the string representation of timestamp plus one or two hours 
+            if False:
+                formatted = dta.get('photoTakenTime', {}).get('formatted')
+                formatted = formatted.replace(" Sept", " Sep ")
+                # we expect 
+                #       7 Sept 2024, 15:37:47 UTC
+                dateFmt = "%d %b %Y, %H:%M:%S %Z"
+                dto = datetime.now()
+                try:
+                    # parse string to a datetime object
+                    dto = datetime.strptime(formatted, dateFmt)
+                except Exception as e:
+                    print(f"could not parse date {e}")
+                # convert to Unix timestamp
+                ts2 = int(time.mktime(dto.timetuple()))
+
+
             fnImg = dta.get('title')
             url = dta.get('url')
             fnShort = f"{fnImg[:16]}...{fnImg[-6:]}"
-            if not ts or not fnImg:
+            if not ts1 or not fnImg:
                 print(f"{fnJson} - missing title or photoTakenTime in {fnShort:28}")
             else:
                 pass
@@ -155,7 +177,7 @@ def globJsons(srcDir, dstDirRel):
             if pthImg.exists():
                 if desc.strip() != "":
                     jpgDescSet(pthImg, desc )
-                updateTimestamp(pthImg, ts)  # after changing meta data
+                updateTimestamp(pthImg, ts1)  # after changing meta data
                 pass
 
 
