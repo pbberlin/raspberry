@@ -1166,10 +1166,15 @@ screen -ls
 screen -r filebrowser
 
 
-
 ```
 
-address
+*  Commands (triggered on events) can be added under [Global Setting](http://192.168.1.102:8081/settings/global)
+
+* Command executable in the "shell" view of the browser must be  
+  configured in the advance [user settings](http://192.168.1.102:8081/settings/users/2)
+
+
+
 
 ## Webserver
 
