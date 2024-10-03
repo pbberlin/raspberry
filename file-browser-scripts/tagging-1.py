@@ -5,6 +5,8 @@ source ~/imgprocessing/bin/activate
 cd /media/pbu/T7/dropbox-24-09/google-takeout-2029-09
 deactivate
 
+# also requires SWAP file of 2GB
+
 # everywhere
 pip install torch torchvision ftfy regex tqdm
 pip install transformers
@@ -45,9 +47,9 @@ print("loading stop")
 # Directory containing the images
 imgRoot = '/media/pbu/T7/dropbox-24-09/'
 
-imgPath = os.path.join(imgRoot, 'google-takeout-2029-09', 'Photos')
+imgDir = os.path.join(imgRoot, 'google-takeout-2029-09', 'Photos')
 
-imgPath = os.path.join(imgRoot, 'img', 'iche-1975-bis')
+imgDir = os.path.join(imgRoot, 'img', 'iche-1975-bis')
 
 
 tags = [
@@ -105,4 +107,4 @@ def tagImgs(imgDir, mdl, preprocess, txtInps):
                         print(f"\t     Tag: {tags[index]:<32} (Confidence: {cf*100:5.2f}%)")
 
 
-tagImgs(imgPath, model, preprocess, text_inputs)
+tagImgs(imgDir, model, preprocess, text_inputs)

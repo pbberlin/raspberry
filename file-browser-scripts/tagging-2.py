@@ -69,9 +69,10 @@ except Exception as e:
 
 def tagImgs(imgDir, mdl, preprocess, txtInps):
 
-    print(f"\t listdir start")
+    print(f"listdir start")
+    print(f"-----------------")
 
-    for imgFile in os.listdir(imgDir):
+    for idx0, imgFile in enumerate(os.listdir(imgDir)):
 
         try:
 
@@ -80,7 +81,7 @@ def tagImgs(imgDir, mdl, preprocess, txtInps):
                 imgPath = os.path.join(imgDir, imgFile)
                 img = preprocess(Image.open(imgPath)).unsqueeze(0).to(dvc)
 
-                print(f"\t {imgPath} start")
+                print(f"{idx0:3} {imgPath} start")
 
                 with torch.no_grad(), torch.cuda.amp.autocast():
                     imagFeats  = model.encode_image(img)
@@ -94,10 +95,10 @@ def tagImgs(imgDir, mdl, preprocess, txtInps):
                     for idx2, torchTens2 in enumerate(torchTens1):
                         prob = torchTens2.item()
                         if prob > 0.2:
-                            print(f"{idx2:2}  Tag: {tags[idx2]:<32} - {prob:10.4f}")
+                            print(f"\t{idx2:2}  Tag: {tags[idx2]:<32} - {prob:10.4f}")
 
         except Exception as e:
-            print(f"problem with {imgFile}")
+            print(f"problem with file '{imgFile}'")
             print(e)
 
 

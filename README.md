@@ -1374,3 +1374,20 @@ sudo systemctl enable  ngrok.service
 
 
 
+### Swap file increase for CLIP AI models
+
+```bash
+
+sudo dphys-swapfile swapoff
+sudo nano /etc/dphys-swapfile
+# CONF_SWAPSIZE=200
+# CONF_SWAPSIZE=4096
+# CONF_SWAPSIZE=2048
+
+
+sudo dphys-swapfile setup
+
+sudo dphys-swapfile swapon
+
+sudo reboot
+```
