@@ -32,20 +32,22 @@ def traverse(rootDir, extensions, minSize):
     return matching
 
 
-def findDuplicates(rootDir, extensions, minSize):
+def findDuplicates(rootDir, exts, minSize):
 
    # Dictionary to store file hash -> list of files
     hashToFiles = defaultdict(list)
 
     upperCased = []
-    for ext in extensions:
+    for ext in exts:
         upperCased.append(ext.upper())
-    extensions.extend(upperCased)
-    print(f"extensions - upper and lower: {extensions}")
+
+    origExts = exts.copy()
+    exts.extend(upperCased)
+    print(f"extensions - upper and lower: {exts}")
 
 
     print(f"traversing {rootDir}")
-    files = traverse(rootDir, extensions, minSize)
+    files = traverse(rootDir, exts, minSize)
     print(f"{len(files)} files found")
 
 
@@ -80,7 +82,7 @@ def findDuplicates(rootDir, extensions, minSize):
 
         # dump a subset of the embeddings as JSON
         timestampSuffix = f"{datetime.now():%Y-%m-%d-%H-%M-%S}"
-        extsStr = "-".join(extensions)
+        extsStr = "-".join(origExts).replace(".", "")
         fn = f"./duplicates-{extsStr}-{timestampSuffix}.json"
         with open(fn, "w", encoding='utf-8') as outFile:
             json.dump(duplicates, outFile, ensure_ascii=False, indent=4)
@@ -94,10 +96,10 @@ def findDuplicates(rootDir, extensions, minSize):
 
 
 if __name__ == "__main__":
-    rootDir = "."
+    rootDir = ".."
 
-    extensions = [".mp4", ".mpg" ]
-    extensions = [".jpg", "jpeg", ".gif", ".png"]
+    # extensions = [".mp4", ".mpg" ]
+    extensions = [".jpg", ".jpeg", ".gif", ".png"]
 
 
     # (  100 * 1024  => 100KB)
