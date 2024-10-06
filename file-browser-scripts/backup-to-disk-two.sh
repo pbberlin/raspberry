@@ -1,3 +1,6 @@
+# backup from SSD to classic disk 
+#   performs with approx 10 MB/s
+
 screen -r backup
 
 year_month=$(date +"%y_%m")
