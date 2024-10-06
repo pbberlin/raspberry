@@ -1,4 +1,6 @@
 import os
+import argparse
+
 import hashlib
 from collections import defaultdict
 
@@ -45,6 +47,13 @@ def findDuplicates(rootDir, exts, minSize):
     exts.extend(upperCased)
     print(f"extensions - upper and lower: {exts}")
 
+    timestampSuffix = f"{datetime.now():%Y-%m-%d-%H-%M-%S}"
+    extsStr = "-".join(origExts).replace(".", "")
+    fnDupes = f"./duplicates-{extsStr}-{timestampSuffix}.json"
+    fnSings = f"./singularis-{extsStr}-{timestampSuffix}.json"
+
+
+
 
     print(f"traversing {rootDir}")
     files = traverse(rootDir, exts, minSize)
@@ -62,9 +71,12 @@ def findDuplicates(rootDir, exts, minSize):
 
     print(f"selecting hashes with multiple files")
     duplicates = {}
+    singularis = {}
     for hashVal, fileList in hashToFiles.items():
         if len(fileList) > 1:
             duplicates[hashVal] = fileList
+        elif len(fileList) == 1:
+            singularis[hashVal] = fileList
 
 
     if duplicates:
@@ -78,31 +90,43 @@ def findDuplicates(rootDir, exts, minSize):
                     pass
                     # os.remove( fileList[0] )
                     # print(f"      deleted {fileList[0]}")
-
-
-        # dump a subset of the embeddings as JSON
-        timestampSuffix = f"{datetime.now():%Y-%m-%d-%H-%M-%S}"
-        extsStr = "-".join(origExts).replace(".", "")
-        fn = f"./duplicates-{extsStr}-{timestampSuffix}.json"
-        with open(fn, "w", encoding='utf-8') as outFile:
-            json.dump(duplicates, outFile, ensure_ascii=False, indent=4)
-            print(f"saving JSON file 'duplicates' {len(duplicates):4} entries")
-
-
-
     else:
         print("No duplicate files found.")
 
 
+    # dump a as JSON
+    with open(fnDupes, "w", encoding='utf-8') as outFile:
+        json.dump(duplicates, outFile, ensure_ascii=False, indent=4)
+        print(f"saving JSON file 'duplicates' {len(duplicates):4} entries")
+
+    with open(fnSings, "w", encoding='utf-8') as outFile:
+        json.dump(singularis, outFile, ensure_ascii=False, indent=4)
+        print(f"saving JSON file 'singularis' {len(singularis):4} entries")
+
+
+
 
 if __name__ == "__main__":
-    rootDir = ".."
 
-    # extensions = [".mp4", ".mpg" ]
-    extensions = [".jpg", ".jpeg", ".gif", ".png"]
+    parser = argparse.ArgumentParser(description="script takes one param type=[images,videos]")    
+    parser.add_argument("type", help="[image,video]")
+    args = parser.parse_args()
+    
+    rootDir = "."
+
+    extensions = []
+    if args.type == "images":
+        extensions = [".jpg", ".jpeg", ".gif", ".png"]
+
+    if args.type == "videos":
+        extensions = [".mp4", ".mpg" ]
 
 
-    # (  100 * 1024  => 100KB)
-    minFileSize = 100 * 1024
+    if len(extensions) < 1:
+        print("first param 'type' must be 'images' or 'videos'")
+        quit()
+
+    # (  60 * 1024  => 100KB)
+    minFileSize = 60 * 1024
 
     findDuplicates(rootDir, extensions, minFileSize)
