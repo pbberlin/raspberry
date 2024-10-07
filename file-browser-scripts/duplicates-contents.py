@@ -49,8 +49,8 @@ def findDuplicates(rootDir, exts, minSize):
 
     timestampSuffix = f"{datetime.now():%Y-%m-%d-%H-%M-%S}"
     extsStr = "-".join(origExts).replace(".", "")
-    fnDupes = f"./duplicates-{extsStr}-{timestampSuffix}.json"
-    fnSings = f"./singularis-{extsStr}-{timestampSuffix}.json"
+    fnDupes = f"./duplicates-content-{extsStr}-{timestampSuffix}.json"
+    fnSings = f"./singularis-content-{extsStr}-{timestampSuffix}.json"
 
 
 
@@ -72,16 +72,16 @@ def findDuplicates(rootDir, exts, minSize):
     print(f"selecting hashes with multiple files")
     duplicates = {}
     singularis = {}
-    for hashVal, fileList in hashToFiles.items():
+    for hashKey, fileList in hashToFiles.items():
         if len(fileList) > 1:
-            duplicates[hashVal] = fileList
+            duplicates[hashKey] = fileList
         elif len(fileList) == 1:
-            singularis[hashVal] = fileList
+            singularis[hashKey] = fileList
 
 
     if duplicates:
-        for hashVal, fileList in duplicates.items():
-            print(f"hash dupe: {hashVal}")
+        for hashKey, fileList in duplicates.items():
+            print(f"hash dupe: {hashKey}")
             for file in fileList:
                 print(f"    {file}")
 
@@ -119,7 +119,7 @@ if __name__ == "__main__":
         extensions = [".jpg", ".jpeg", ".gif", ".png"]
 
     if args.type == "videos":
-        extensions = [".mp4", ".mpg" ]
+        extensions = [".mp4", ".mpg", ".mkv" ]
 
 
     if len(extensions) < 1:
