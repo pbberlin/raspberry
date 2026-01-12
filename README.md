@@ -1109,6 +1109,7 @@ sudo apt-get install exfat-fuse
 
 
 * Reachable [locally](http://192.168.1.102:8081/settings/global)
+* Reachable [locally](http://raspberrypi.local:8081/settings/global)
 * Reachable [everywhere](https://merry-mosquito-cool.ngrok-free.app/)
 
 
@@ -1179,8 +1180,8 @@ sudo systemctl status   apache2.service
 
 ```bash
 mkdir ngrok
-cd ngrok
-wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm64.tgz
+cd    ngrok
+wget  https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-arm64.tgz
 
 sudo tar -xvzf ~/ngrok/ngrok-v3-stable-linux-arm64.tgz -C /usr/local/bin
 
@@ -1193,6 +1194,7 @@ screen -S ngrok
 ngrok http --domain=merry-mosquito-cool.ngrok-free.app   80
 ngrok http --domain=merry-mosquito-cool.ngrok-free.app 2342
 ngrok http --domain=merry-mosquito-cool.ngrok-free.app 8081
+# ngrok http --domain=merry-mosquito-cool.ngrok-free.app 2283
 # [CTRL-A][D]
 
 screen -ls
@@ -1291,3 +1293,58 @@ sudo dphys-swapfile swapon
 
 sudo reboot
 ```
+
+
+## 2025-04 - immich - instead of filebrowser - FAIL
+
+the raspberry froze during indexing
+
+### initial
+
+install docker
+<https://pimylifeup.com/raspberry-pi-docker/>
+
+now immich
+<https://pimylifeup.com/raspberry-pi-immich/>
+sudo mkdir -p /opt/stacks/immich
+cd /opt/stacks/immich
+
+sudo wget https://github.com/immich-app/immich/releases/latest/download/docker-compose.yml
+sudo wget -O .env https://github.com/immich-app/immich/releases/latest/download/example.env
+
+
+### import additional folder
+
+<https://immich.app/docs/features/libraries#import-paths>
+
+sudo vim docker-compose.yml
+
+volumes:
++     - /mnt/nas/christmas-trip:/mnt/media/christmas-trip:ro
++     - /media/pbu/T7/media:/mnt/media/t7
+
+docker compose down
+docker compose up -d
+
+UI
+        Click on Administration -> Libraries
+        Click on Create External Library
+
+### update
+
+cd /opt/stacks/immich
+docker compose pull
+docker compose up -d
+
+### monitor
+
+docker logs -f immich_server
+docker logs -f immich_machine_learning
+
+
+### access
+
+http://raspberrypi.local:2283
+pbberlin
+peter.buchmann@web.de
+Pb....
